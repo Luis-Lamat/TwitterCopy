@@ -11,6 +11,10 @@ hr {
     margin-bottom: 5px !important;
 }
 
+textarea {
+    resize: none;
+}
+
 .login-body-wrap {
     padding: 20px;
     border-bottom-right-radius: 5px;
@@ -48,9 +52,14 @@ hr {
     box-shadow: 0px 0px 40px #BBB;
 }
 
+.post-form {
+    padding: 25px;
+    background-color: #F0F8FF;
+}
+
 .post-card {
     padding: 30px 20px 10px 20px;
-    border-bottom: 1px solid #A2A2A2; 
+    border-top: 1px solid #A2A2A2; 
 }
 
 .post-creator {
@@ -77,6 +86,10 @@ hr {
     color: #F0F0F0 !important;
 }
 
+#post-btn {
+/*    display: block;
+    float: right;*/
+}
 
 /* BOOTRAP OVERRIDES */
 
