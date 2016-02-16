@@ -1,4 +1,4 @@
-
+ 
 // Global variable definition
 var post_content = $('#post-content');
 var post_btn = $('#post-btn');
