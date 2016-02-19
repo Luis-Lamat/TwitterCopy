@@ -7,7 +7,11 @@ var sample_users = [{
     'password': '12345'
 }]; 
 
-// Main function definition
+/**
+ * main_function
+ * 
+ * Main function definition
+ */
 var main_function = function() {
     var class_name = document.getElementsByTagName('body')[0].className;
 
@@ -21,6 +25,12 @@ var main_function = function() {
     };  
 };
 
+/**
+ * register_user
+ * 
+ * Method to register a user in the app, redirects to home. 
+ * @param event, the form submit event.
+ */
 function register_user (event){
     event.preventDefault();
     var fields = [$('#username'), $('#email'), $('#password'), 
@@ -29,6 +39,12 @@ function register_user (event){
     alert("LOL");
 };
 
+/**
+ * authenticate_user
+ * 
+ * Method to authenticate a user in the app, redirects to home. 
+ * @param event, the form submit event.
+ */
 function authenticate_user (event) {
     event.preventDefault();
     var fields = [$('#email'), $('#password')];
@@ -39,7 +55,6 @@ function authenticate_user (event) {
             is_valid = (sample_users[i]['password'] == passw);
         };
     };
-
     if (is_valid) {
         window.location.assign('homepage.html');
     } else {
@@ -47,6 +62,13 @@ function authenticate_user (event) {
     };
 };
 
+
+/**
+ * validate_fields
+ * 
+ * Method to validate if even one field of a field array is empty. 
+ * @param field_array
+ */
 function validate_fields (field_array) {
     for (var i = field_array.length - 1; i >= 0; i--) {
         if (field_array[i].val() == "") {
