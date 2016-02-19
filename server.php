@@ -43,8 +43,9 @@ function connect_to_db(){
 function register() {
     $conn = connect_to_db();
     $email = $conn->real_escape_string($_POST["email"]);
+    $username = $conn->real_escape_string($_POST["username"]);
     $password = $_POST["password"];
-    $sql = 'SELECT hash FROM `users` WHERE email = \''.$email.'\'';
+    $sql = 'SELECT password_hash FROM `user` WHERE email = \''.$email.'\'';
     $rs = $conn->query($sql);
     if ($rs->num_rows != 0) {
         header("HTTP/1.1 404 - Not Found");
@@ -59,7 +60,9 @@ function register() {
     $salt = sprintf("$2a$%02d$", $cost) . $salt;
     // Hash the password with the salt and save to database
     $hash = crypt($password, $salt);
-    $sql = 'INSERT INTO users (email, hash) values (\''.$email.'\', \''.$hash.'\')';
+    $sql = "INSERT INTO user (username, email, password_hash) values ('".$username."','".$email."','".$hash."')";
+    echo $hash;
+    echo "\n";
     if (!$conn->query($sql)) {
         echo "Error: (".$conn->errno.") ".$conn->error;
     }
