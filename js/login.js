@@ -33,7 +33,7 @@ function register_user (event){
         method: "POST",
         url: "../server.php",
         data: { 
-            action: "Resgister",
+            action: "Register",
             username: fields[0].val(),
             email: fields[1].val(), 
             password: fields[1].val(),
@@ -43,7 +43,7 @@ function register_user (event){
             window.location.assign('homepage.html');
         },
         error: function (msg) {
-            swal("Incorrect email or password", "Please try again.", "error");
+            swal("Email or username already exists", "Please choose another.", "error");
         }
     });
 

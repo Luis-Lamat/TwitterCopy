@@ -31,7 +31,7 @@ function DB_error ($conn){
 }
 
 function error ($code, $msg){
-    header('HTTP/1.1 {$code} ' . $msg);
+    header('HTTP/1.1 ' . strval($code). " " . $msg);
     header('Content-Type: application/json; charset=UTF-8');
     die(json_encode(array('message' => 'ERROR ' . $msg, 'code' => $code)));
 }
@@ -53,7 +53,7 @@ function register() {
     $password = $_POST["password"];
     $password_confirmation = $_POST["password_confirmation"];
 
-    $sql = 'SELECT password_hash FROM `user` WHERE email = \''.$email.'\'';
+    $sql = 'SELECT password_hash FROM `user` WHERE email = \''.$email.'\' OR username = \''.$username.'\'';
     $rs = $conn->query($sql);
     if ($rs->num_rows != 0) {
         error(404, 'Email already exists');
