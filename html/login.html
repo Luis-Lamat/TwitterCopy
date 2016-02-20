@@ -28,7 +28,7 @@
                     Login to our site!
                 </div>
                 <div class="login-body-wrap">
-                    <form id="form">
+                    <form id="form" action="../server.php" method="post">
                         <div class="form-group">
                             <label for="email">Email address</label>
                             <input type="email" class="form-control" id="email" placeholder="Email">
@@ -45,7 +45,7 @@
                         <div class="container-fluid" style="padding:0px;">
                           <div class="row">
                             <div class="col-md-9" style="margin-top:10px;">
-                                <button type="submit" class="btn btn-block btn-primary">Login</button>
+                                <button type="submit" name="action" value="Login" class="btn btn-block btn-primary">Login</button>
                             </div>
                             <div class="col-md-3" style="margin-top:10px;">
                                 <a href="registration.html" class="btn btn-block btn-default btn-gray"> Or Register</a>

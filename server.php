@@ -25,9 +25,15 @@ default:
     break;
 }
 
-function display_error($conn){
+function DB_error ($conn){
     header("HTTP/1.1 500 Error: (".$conn->errno.") ".$conn->error);
     die(json_encode('Unable to connect to database [' . $conn->connect_error . ']'));
+}
+
+function error ($code, $msg){
+    header('HTTP/1.1 {$code} ' . $msg);
+    header('Content-Type: application/json; charset=UTF-8');
+    die(json_encode(array('message' => 'ERROR ' . $msg, 'code' => $code)));
 }
 
 function connect_to_db(){
@@ -35,7 +41,7 @@ function connect_to_db(){
     session_start();
     $conn = new mysqli('localhost', 'root', 'root', 'TwitterCopy');
     if ($conn->connect_errno > 0) {
-        display_error($conn);
+        DB_error($conn);
     }
     return $conn;
 }
@@ -45,29 +51,51 @@ function register() {
     $email = $conn->real_escape_string($_POST["email"]);
     $username = $conn->real_escape_string($_POST["username"]);
     $password = $_POST["password"];
+    $password_confirmation = $_POST["password_confirmation"];
+
     $sql = 'SELECT password_hash FROM `user` WHERE email = \''.$email.'\'';
     $rs = $conn->query($sql);
     if ($rs->num_rows != 0) {
-        header("HTTP/1.1 404 - Not Found");
-        exit;
-    }
-    // A higher "cost" is more secure but consumes more processing power
-    $cost = 10;
-    // Create a random salt
-    $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
-    // Prefix information about the hash so PHP knows how to verify it later.
-    // "$2a$" Means we're using the Blowfish algorithm. The following two digits are the cost parameter.
-    $salt = sprintf("$2a$%02d$", $cost) . $salt;
-    // Hash the password with the salt and save to database
-    $hash = crypt($password, $salt);
-    $sql = "INSERT INTO user (username, email, password_hash) values ('".$username."','".$email."','".$hash."')";
-    echo $hash;
-    echo "\n";
-    if (!$conn->query($sql)) {
-        echo "Error: (".$conn->errno.") ".$conn->error;
+        error(404, 'Email already exists');
     }
 
+    $cost = 10;
+    $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+    $salt = sprintf("$2a$%02d$", $cost) . $salt;
+    $hash = crypt($password, $salt);
+
+    $sql = "INSERT INTO user (username, email, password_hash) values ('".$username."','".$email."','".$hash."')";
+    if (!$conn->query($sql)) {
+        echo "Error: (".$conn->errno.") ".$conn->error;
+        die(json_encode(array('message' => 'DB ERROR', 'code' => 500)));
+    }
     echo json_encode("200");
 }
+
+function login() {
+    $conn = connect_to_db();
+    $email = $conn->real_escape_string($_POST["email"]);
+    $passwordEntered = $_POST["password"];
+    $sql = 'SELECT password_hash FROM `user` WHERE email = \''.$email.'\' LIMIT 1';
+    $rs = $conn->query($sql);
+    if ($rs->num_rows == 0) {
+        error(404, 'Invalid email');
+    }
+    if ($row = mysqli_fetch_array($rs)) {
+        $DBHash = $row["password_hash"];
+        // Hashing the password with its hash as the salt returns the same hash, verifying the password was correct
+        if ( hash_equals(crypt($passwordEntered, $DBHash), $DBHash) ) {
+            // verified, set cookies for logged in
+            setcookie("loggedIn", true, time()+3600);
+            setcookie("email", $email, time()+3600);
+            header('Content-Type: application/json');
+            echo json_encode(200);
+        } else {
+            error(404, 'Invalid password');
+        }
+        exit;
+    }
+}
+
 
 ?>
