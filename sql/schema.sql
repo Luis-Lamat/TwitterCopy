@@ -36,3 +36,5 @@ CREATE TABLE Favorites (
     FOREIGN KEY(post_id) REFERENCES Post(id),
     FOREIGN KEY(user_id) REFERENCES User(id)
 );
+
+INSERT INTO user (username, email, password_hash) values ('Luis', 'email@mlg.com', '$2a$10$FWWyJZfZHnr6T2vh6fMhzurX8Pt076GJtmxXS7ALCimaFtyiMxkOi');
