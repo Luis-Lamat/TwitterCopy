@@ -3,10 +3,14 @@
 var post_content = $('#post-content');
 var post_btn = $('#post-btn');
 
-// Main function definition
-var main_function = function() {
-    post_content.on('focus', expand_post_form);
-    post_content.on('blur', retract_post_form);
+/**
+ * main_function
+ * 
+ * Main function definition
+ */
+ var main_function = function() {
+    // post_content.on('focus', expand_post_form);
+    // post_content.on('blur', retract_post_form);
     post_content.on('input', enable_post_btn);
     post_btn.on('click', create_post);
 };
@@ -17,10 +21,12 @@ function expand_post_form () {
 function retract_post_form () {
 };
 
-function enable_post_btn () {
-    post_btn[0].disabled = (post_content.val().length == 0);
-};
-
+/**
+ * create_post
+ * 
+ * Method to create a post on the DB and in the front-end. 
+ * @param event, the form post submit event.
+ */
 function create_post (event) {
     event.preventDefault();
     var post_text = post_content.val();
@@ -59,9 +65,23 @@ function create_post (event) {
 
 };
 
+/**
+ * clear_post_fields
+ * 
+ * Method to claer the post input fields and disable the post btn if needed. 
+ */
 function clear_post_fields () {
     post_content.val("");
     enable_post_btn();
+};
+
+/**
+ * enable_post_btn
+ * 
+ * Method to enable the post btn if valid input. 
+ */
+function enable_post_btn () {
+    post_btn[0].disabled = (post_content.val().length == 0);
 };
 
 // Main function binding call
