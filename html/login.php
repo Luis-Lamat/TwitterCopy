@@ -1,3 +1,8 @@
+<?php
+if (isset($_COOKIE['loggedIn']) && $_COOKIE['loggedIn']) {
+    header("location: homepage.php"); exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
