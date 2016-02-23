@@ -20,11 +20,6 @@ case "Log Out":
     logout();
     break;
 default:
-    // ajax function
-    if ($_GET["username"]) {
-        checkUsername();
-        break;
-    }
     break;
 }
 
@@ -58,7 +53,7 @@ function login() {
     $conn = connect_to_db();
     $email = $conn->real_escape_string($_POST["email"]);
     $passwordEntered = $_POST["password"];
-    $sql = 'SELECT password_hash, username FROM `user` WHERE email = \''.$email.'\' LIMIT 1';
+    $sql = 'SELECT id, password_hash, username FROM `user` WHERE email = \''.$email.'\' LIMIT 1';
     $rs = $conn->query($sql);
     if ($rs->num_rows == 0) {
         error(404, 'Invalid email');
@@ -71,6 +66,7 @@ function login() {
             setcookie("loggedIn", true, time()+3600);
             setcookie("email", $email, time()+3600);
             setcookie("username", $row["username"], time()+3600);
+            setcookie("user_id", $row["id"], time()+3600);
             header('Content-Type: application/json');
             echo json_encode(200);
         } else {

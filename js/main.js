@@ -26,19 +26,35 @@ function create_post (event) {
     var post_text = post_content.val();
 
     if (post_text.length > 0){
-        var new_post_wrap = $('.new-posts');
-        var empty_post = $('.empty.post-card');
 
-        // cloning the empty divs and prepending
-        var new_empty_post = empty_post.clone();
-        new_post_wrap.prepend(new_empty_post); 
+        // insert into DB
+        $.ajax({
+            method: "POST",
+            url: "../posts_controller.php",
+            dataType: "json",
+            data: { 
+                action: "create_post",
+                content: post_text
+            },
+            success: function(data){
+                var new_post_wrap = $('.new-posts');
+                var empty_post = $('.empty.post-card');
 
-        empty_post.removeClass('empty');
-        empty_post.find('.post-creator')[0].innerHTML = "Luis Lamadrid";
-        empty_post.find('.post-content')[0].innerHTML = post_text;
-        empty_post.find('.post-footer')[0].innerHTML = "Posted today";
-        empty_post.show();
-        clear_post_fields();
+                // cloning the empty divs and prepending
+                var new_empty_post = empty_post.clone();
+                new_post_wrap.prepend(new_empty_post); 
+
+                empty_post.removeClass('empty');
+                empty_post.find('.post-creator')[0].innerHTML = data.author;
+                empty_post.find('.post-content')[0].innerHTML = post_text;
+                empty_post.find('.post-footer')[0].innerHTML = "Posted on " + data.created_at;
+                empty_post.show();
+                clear_post_fields();
+            },
+            error: function (msg) {
+                swal("Incorrect email or password", "Please try again.", "error");
+            }
+        });
     };
 
 };
