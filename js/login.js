@@ -31,7 +31,7 @@ function register_user (event){
     
     $.ajax({
         method: "POST",
-        url: "../server.php",
+        url: "../sessions_controller.php",
         data: { 
             action: "Register",
             username: fields[0].val(),
@@ -63,7 +63,7 @@ function authenticate_user (event) {
     // ajax DB validation
     $.ajax({
         method: "POST",
-        url: "../server.php",
+        url: "../sessions_controller.php",
         data: { 
             action: "Login", 
             email: fields[0].val(), 

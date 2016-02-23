@@ -28,7 +28,7 @@
                     Login to our site!
                 </div>
                 <div class="login-body-wrap">
-                    <form id="form" action="../server.php" method="post">
+                    <form id="form" action="../sessions_controller.php" method="post">
                         <div class="form-group">
                             <label for="email">Email address</label>
                             <input type="email" class="form-control" id="email" placeholder="Email">

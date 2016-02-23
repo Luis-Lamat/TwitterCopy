@@ -6,6 +6,9 @@
  * Time: 8:25 AM
  */
 
+include 'db_connection.php';
+
+
 switch ($_POST["action"]) {
 case "Register":
     register();
@@ -23,27 +26,6 @@ default:
         break;
     }
     break;
-}
-
-function DB_error ($conn){
-    header("HTTP/1.1 500 Error: (".$conn->errno.") ".$conn->error);
-    die(json_encode('Unable to connect to database [' . $conn->connect_error . ']'));
-}
-
-function error ($code, $msg){
-    header('HTTP/1.1 ' . strval($code). " " . $msg);
-    header('Content-Type: application/json; charset=UTF-8');
-    die(json_encode(array('message' => 'ERROR ' . $msg, 'code' => $code)));
-}
-
-function connect_to_db(){
-    ini_set('display_errors', 1);
-    session_start();
-    $conn = new mysqli('localhost', 'root', 'root', 'TwitterCopy');
-    if ($conn->connect_errno > 0) {
-        DB_error($conn);
-    }
-    return $conn;
 }
 
 function register() {

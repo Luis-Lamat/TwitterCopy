@@ -27,7 +27,7 @@
                     Registration Form
                 </div>
                 <div class="login-body-wrap">
-                    <form action="../server.php" method="post" id="form">
+                    <form action="../sessions_controller.php" method="post" id="form">
                         <div class="form-group">
                             <!-- <label for="username">Username</label> -->
                             <input type="text" class="form-control" name="username" id="username" placeholder="Username">

@@ -42,7 +42,7 @@
                 </span>
             </div><!-- /input-group -->
           </form>
-            <form action="../server.php" method="post">
+            <form action="../sessions_controller.php" method="post">
                 <input id="logout-btn" class="navbar-text pull-right navbar-link" type="submit" name="action" value="Log Out">
             </form>
             <p class="navbar-text pull-right">Signed in as <a href="profile.php" class="navbar-link"><?php echo $_COOKIE["username"];?></a></p>
