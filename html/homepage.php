@@ -1,3 +1,4 @@
+<?php if (!$_COOKIE["loggedIn"]) { header("location: login.php"); exit; } ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +16,7 @@
     <title>Home</title>
 </head>
 <body>
-    
+
     <!-- nav begin -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -32,8 +33,8 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="homepage.html">Home <span class="sr-only">(current)</span></a></li>
-            <li><a href="profile.html">Profile</a></li>
+            <li class="active"><a href="homepage.php">Home <span class="sr-only">(current)</span></a></li>
+            <li><a href="profile.php">Profile</a></li>
           </ul>
           <form class="navbar-form navbar-left" role="search">
             <div class="input-group">
@@ -43,7 +44,11 @@
                 </span>
             </div><!-- /input-group -->
           </form>
-            <p class="navbar-text pull-right">Signed in as <a href="profile.html" class="navbar-link">Luis Lamadrid</a></p>
+            <form action="../server.php" method="post">
+                <input id="logout-btn" class="navbar-text pull-right navbar-link" type="submit" name="action" value="Log Out">
+            </form>
+            <p class="navbar-text pull-right">Signed in as <a href="profile.php" class="navbar-link"><?php echo $_COOKIE["username"];?></a></p>
+
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
@@ -84,32 +89,6 @@
                     </div>
                     </div>
                     
-                    <div class="post-card">
-                        <img src="../assets/images/user.png" class="img-responsive post-usr-img" alt="">
-                        <span class="post-creator">
-                            Luis Lamadrid
-                        </span>
-                        <div class="post-content">
-                            This is my first post!
-                        </div>
-                        <hr>
-                        <div class="post-footer">
-                            Posted on 01/22/2016
-                        </div>
-                    </div>
-                    <div class="post-card">
-                        <img src="../assets/images/user.png" class="img-responsive post-usr-img" alt="">
-                        <span class="post-creator">
-                            Luis Lamadrid
-                        </span>
-                        <div class="post-content">
-                            This is my second post!
-                        </div>
-                        <hr>
-                        <div class="post-footer">
-                            Posted on 01/22/2016
-                        </div>
-                    </div>
 
                 </div>
             </div>

@@ -40,7 +40,7 @@ function register_user (event){
             password_confirmation: fields[2].val()
         },
         success: function(data){
-            window.location.assign('homepage.html');
+            window.location.assign('homepage.php');
         },
         error: function (msg) {
             swal("Email or username already exists", "Please choose another.", "error");
@@ -70,7 +70,7 @@ function authenticate_user (event) {
             password: fields[1].val() 
         },
         success: function(data){
-            window.location.assign('homepage.html');
+            window.location.assign('homepage.php');
         },
         error: function (msg) {
             swal("Incorrect email or password", "Please try again.", "error");

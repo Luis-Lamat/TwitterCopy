@@ -76,7 +76,7 @@ function login() {
     $conn = connect_to_db();
     $email = $conn->real_escape_string($_POST["email"]);
     $passwordEntered = $_POST["password"];
-    $sql = 'SELECT password_hash FROM `user` WHERE email = \''.$email.'\' LIMIT 1';
+    $sql = 'SELECT password_hash, username FROM `user` WHERE email = \''.$email.'\' LIMIT 1';
     $rs = $conn->query($sql);
     if ($rs->num_rows == 0) {
         error(404, 'Invalid email');
@@ -88,6 +88,7 @@ function login() {
             // verified, set cookies for logged in
             setcookie("loggedIn", true, time()+3600);
             setcookie("email", $email, time()+3600);
+            setcookie("username", $row["username"], time()+3600);
             header('Content-Type: application/json');
             echo json_encode(200);
         } else {
@@ -95,6 +96,15 @@ function login() {
         }
         exit;
     }
+}
+
+function logout() {
+    // delete cookies to log out, redirect to login page
+    setcookie("loggedIn", false, time()-1);
+    setcookie("email", false, time()-1);
+    setcookie("username", false, time()-1);
+    header("location: html/login.php");
+    exit;
 }
 
 
