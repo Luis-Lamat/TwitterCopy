@@ -9,16 +9,11 @@ var post_btn = $('#post-btn');
  * Main function definition
  */
  var main_function = function() {
+    load_all_posts();
     // post_content.on('focus', expand_post_form);
     // post_content.on('blur', retract_post_form);
     post_content.on('input', enable_post_btn);
     post_btn.on('click', create_post);
-};
-
-function expand_post_form () {
-};
-
-function retract_post_form () {
 };
 
 /**
@@ -32,7 +27,6 @@ function create_post (event) {
     var post_text = post_content.val();
 
     if (post_text.length > 0){
-
         // insert into DB
         $.ajax({
             method: "POST",
@@ -43,18 +37,7 @@ function create_post (event) {
                 content: post_text
             },
             success: function(data){
-                var new_post_wrap = $('.new-posts');
-                var empty_post = $('.empty.post-card');
-
-                // cloning the empty divs and prepending
-                var new_empty_post = empty_post.clone();
-                new_post_wrap.prepend(new_empty_post); 
-
-                empty_post.removeClass('empty');
-                empty_post.find('.post-creator')[0].innerHTML = data.author;
-                empty_post.find('.post-content')[0].innerHTML = post_text;
-                empty_post.find('.post-footer')[0].innerHTML = "Posted on " + data.created_at;
-                empty_post.show();
+                load_post(data.author, post_text, data.created_at);
                 clear_post_fields();
             },
             error: function (msg) {
@@ -64,6 +47,51 @@ function create_post (event) {
     };
 
 };
+
+/**
+ * load_all_posts
+ * 
+ * Method to load all posts from DB to html. 
+ */
+function load_all_posts () {
+    $.ajax({
+        method: "GET",
+        url: "../posts_controller.php?action=get_all_posts",
+        dataType: "json",
+        success: function(d){
+            for (var i = d.length - 1; i >= 0; i--) {
+                // TODO: d[i].id returns the id of the post (for the href)
+                load_post(d[i].username, d[i].content, d[i].created_at);
+            };
+        },
+        error: function (msg) {
+            console.log("There are no posts in the database.");
+        }
+    });
+}
+
+/**
+ * load_post
+ * 
+ * Method to load a single post to html.
+ * @param author, of post
+ * @param content, of post
+ * @param date, created
+ */
+function load_post (author, content, date) {
+    var new_post_wrap = $('.new-posts');
+    var empty_post = $('.empty.post-card');
+
+    // cloning the empty divs and prepending
+    var new_empty_post = empty_post.clone();
+    new_post_wrap.prepend(new_empty_post); 
+
+    empty_post.removeClass('empty');
+    empty_post.find('.post-creator')[0].innerHTML = author;
+    empty_post.find('.post-content')[0].innerHTML = content;
+    empty_post.find('.post-footer')[0].innerHTML = "Posted on " + date;
+    empty_post.show();
+}
 
 /**
  * clear_post_fields

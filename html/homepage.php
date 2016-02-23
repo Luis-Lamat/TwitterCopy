@@ -102,7 +102,7 @@
 
 
     <!-- Script links -->
-    <script src="../js/main.js"></script>
+    <script src="../js/posts.js"></script>
     <script src="../js/bootstrap.js"></script>
 </body>
 </html>
