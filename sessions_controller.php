@@ -46,6 +46,13 @@ function register() {
         echo "Error: (".$conn->errno.") ".$conn->error;
         die(json_encode(array('message' => 'DB ERROR', 'code' => 500)));
     }
+    $sql = 'SELECT * FROM user ORDER BY id DESC LIMIT 1';
+    $rs = $conn->query($sql);
+    if ($rs->num_rows == 0) {
+        error(500, 'Record doesn\'t exist in DB');
+    }
+    $user = mysqli_fetch_assoc($rs);
+    set_login_cookies($user['id'], $user['email'], $user['username']);
     echo json_encode("200");
 }
 
@@ -60,14 +67,14 @@ function login() {
     }
     if ($row = mysqli_fetch_array($rs)) {
         $DBHash = $row["password_hash"];
-        // Hashing the password with its hash as the salt returns the same hash, verifying the password was correct
-        if ( hash_equals(crypt($passwordEntered, $DBHash), $DBHash) ) {
+        // echo $DBHash . "\r\n";
+        // echo crypt($passwordEntered, $DBHash);
+
+        // Hashing the password with its hash as the salt returns the same hash, 
+        // verifying the password was correct
+        if ( hash_equals2(crypt($passwordEntered, $DBHash), $DBHash) ) {
             // verified, set cookies for logged in
-            setcookie("loggedIn", true, time()+3600);
-            setcookie("email", $email, time()+3600);
-            setcookie("username", $row["username"], time()+3600);
-            setcookie("user_id", $row["id"], time()+3600);
-            header('Content-Type: application/json');
+            set_login_cookies($row['id'], $email, $row['username']);
             echo json_encode(200);
         } else {
             error(404, 'Invalid password');
@@ -85,5 +92,24 @@ function logout() {
     exit;
 }
 
+function set_login_cookies($user_id, $email, $username) {
+    setcookie("loggedIn", true, time()+3600);
+    setcookie("email", $email, time()+3600);
+    setcookie("username", $username, time()+3600);
+    setcookie("user_id", $user_id, time()+3600);
+    header('Content-Type: application/json');
+}
+
+function hash_equals2($str1, $str2) {
+    if(strlen($str1) != strlen($str2)) {
+        return false;
+    }
+    $res = $str1 ^ $str2;
+    $ret = 0;
+    for ($i = strlen($res) - 1; $i >= 0; $i--) {
+        $ret |= ord($res[$i]);
+    }
+    return !$ret;
+}
 
 ?>

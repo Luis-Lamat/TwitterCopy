@@ -53,7 +53,7 @@ if (isset($_COOKIE['loggedIn']) && $_COOKIE['loggedIn']) {
                                 <button type="submit" name="action" value="Login" class="btn btn-block btn-primary">Login</button>
                             </div>
                             <div class="col-md-3" style="margin-top:10px;">
-                                <a href="registration.html" class="btn btn-block btn-default btn-gray"> Or Register</a>
+                                <a href="registration.php" class="btn btn-block btn-default btn-gray"> Or Register</a>
                             </div>
                           </div>
                         </div>

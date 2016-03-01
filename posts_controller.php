@@ -63,6 +63,7 @@ function create_post (){
   }
   echo json_encode(array(
     'code' => '200',
+    'id' => $_COOKIE["user_id"],
     'author' => $_COOKIE["username"], 
     'created_at' => $created_at
   ));

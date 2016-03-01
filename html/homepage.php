@@ -34,7 +34,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li class="active"><a href="homepage.php">Home <span class="sr-only">(current)</span></a></li>
-            <li><a href="profile.php">Profile</a></li>
+            <li><a href="profile.php?user_id=<?php echo $_COOKIE['user_id']; ?>">Profile</a></li>
           </ul>
           <form class="navbar-form navbar-left" role="search">
             <div class="input-group">
@@ -47,8 +47,9 @@
             <form action="../sessions_controller.php" method="post">
                 <input id="logout-btn" class="navbar-text pull-right navbar-link" type="submit" name="action" value="Log Out">
             </form>
-            <p class="navbar-text pull-right">Signed in as <a href="profile.php" class="navbar-link"><?php echo $_COOKIE["username"];?></a></p>
-
+            <p class="navbar-text pull-right">Signed in as 
+                <a href="profile.php?user_id=<?php echo $_COOKIE['user_id']; ?>" class="navbar-link"><?php echo $_COOKIE['username'];?></a>
+            </p>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
@@ -79,8 +80,8 @@
                     <div class="new-posts">
                     <div class="empty post-card" hidden>
                         <img src="../assets/images/user.png" class="img-responsive post-usr-img" alt="">
-                        <span class="post-creator">
-                        </span>
+                        <a href="" class="post-creator">
+                        </a>
                         <div class="post-content">
                         </div>
                         <hr>

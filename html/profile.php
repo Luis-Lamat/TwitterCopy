@@ -13,7 +13,7 @@
     <script src="../js/jquery.js"></script>
     <title>Profile</title>
 </head>
-<body>
+<body data-user-id="<?php echo $_GET['user_id']; ?>">
     
     <!-- nav begin -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -32,7 +32,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li><a href="homepage.php">Home <span class="sr-only">(current)</span></a></li>
-            <li class="active"><a href="profile.php">Profile</a></li>
+            <li class="active"><a href="profile.php?user_id=<?php echo $_COOKIE['user_id']; ?>">Profile</a></li>
           </ul>
           <form class="navbar-form navbar-left" role="search">
             <div class="input-group">
@@ -45,8 +45,9 @@
             <form action="../sessions_controller.php" method="post">
                 <input id="logout-btn" class="navbar-text pull-right navbar-link" type="submit" name="action" value="Log Out">
             </form>
-            <p class="navbar-text pull-right">Signed in as <a href="profile.php" class="navbar-link"><?php echo $_COOKIE["username"];?></a></p>
-
+            <p class="navbar-text pull-right">Signed in as 
+                <a href="profile.php?user_id=<?php echo $_COOKIE['user_id']; ?>" class="navbar-link"><?php echo $_COOKIE['username'];?></a>
+            </p>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
@@ -72,9 +73,11 @@
                     </div>
                 </div>
             </div>
+            <!-- 
             <div class="bottom-div-actions">
                 <a href="" class="btn btn-primary">Edit</a>
-            </div>
+            </div> 
+            -->
 
 
             </div>
@@ -87,5 +90,6 @@
     <!-- Script links -->
 
     <script src="../js/bootstrap.js"></script>
+    <script src="../js/profiles.js"></script>
 </body>
 </html>
