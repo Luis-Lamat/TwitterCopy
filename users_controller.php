@@ -14,7 +14,7 @@ if (!empty($_POST)) {
   switch ($_POST["action"]) {
   case "update_user":
       // TODO: extra
-      // update_user();
+      update_user();
       exit;
   default:
       exit;
@@ -47,6 +47,10 @@ function get_user ($user_id){
   }
   $row = mysqli_fetch_assoc($rs);
   echo json_encode($row);
+}
+
+function update_user (){
+  
 }
 
 

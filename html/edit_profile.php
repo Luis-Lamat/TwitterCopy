@@ -59,30 +59,33 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
             
-
+            <form id="form" action="../users_controller.php" method="post">
             <div class="shadow-wrap">
                 <div class="top-div-title">
                     Profile
                 </div>
                 <div class="login-body-wrap">
                     <div class="post-card" style="border: 0px; padding-bottom:30px;">
-                        <img src="https://tracker.moodle.org/secure/attachment/30912/f3.png" class="img-responsive post-usr-img" alt="">
-                        <span class="post-creator">
-                            Username: <?php echo $_COOKIE['username'] ?>
-                        </span><br>
-                        <span class="post-creator">
-                            Email: <?php echo $_COOKIE['email'] ?>
+                        <span class="post-creator"> 
+                            <div class="form-group">
+                                <label for="username">Username:</label>
+                                <input type="text" class="form-control" id="username" value="<?php echo $_COOKIE['username'] ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="text" class="form-control" id="email" value="<?php echo $_COOKIE['email'] ?>">
+                            </div>
                         </span>
                     </div>
                 </div>
             </div>
-            
             <div class="bottom-div-actions">
-                <a href="edit_profile.php" class="btn btn-primary">Edit</a>
-            </div> 
-           
+                <button type="submit" name="action" value="update_user" class="btn btn-primary">Update</button>
+                <input type="hidden" name="user_id" value="<?php $_COOKIE['user_id'] ?>"/>
+                <a href="profile.php" class="btn btn-default pull-right">Back</a>
 
-
+            </div>
+            </form>
             </div>
             <div class="col-md-3"></div>
         </div>

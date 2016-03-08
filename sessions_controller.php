@@ -88,11 +88,13 @@ function logout() {
     setcookie("loggedIn", false, time()-1);
     setcookie("email", false, time()-1);
     setcookie("username", false, time()-1);
+    setcookie("user_id", false, time()-1);
     header("location: html/login.php");
     exit;
 }
 
 function set_login_cookies($user_id, $email, $username) {
+    echo "THIS IS -> " . $user_id
     setcookie("loggedIn", true, time()+3600);
     setcookie("email", $email, time()+3600);
     setcookie("username", $username, time()+3600);
