@@ -94,7 +94,6 @@ function logout() {
 }
 
 function set_login_cookies($user_id, $email, $username) {
-    echo "THIS IS -> " . $user_id
     setcookie("loggedIn", true, time()+3600);
     setcookie("email", $email, time()+3600);
     setcookie("username", $username, time()+3600);

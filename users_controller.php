@@ -14,7 +14,7 @@ if (!empty($_POST)) {
   switch ($_POST["action"]) {
   case "update_user":
       // TODO: extra
-      update_user();
+      update_user($_POST['user_id'], $_POST['username'], $_POST['email']);
       exit;
   default:
       exit;
@@ -49,8 +49,21 @@ function get_user ($user_id){
   echo json_encode($row);
 }
 
-function update_user (){
-  
+function update_user ($user_id, $username, $email){
+  $conn = connect_to_db();
+  $sql = ' SELECT id FROM user WHERE id = ' . $user_id . ';';
+  $rs = $conn->query($sql);
+  if ($rs->num_rows == 0) {
+      error(404, 'User not found');
+  }
+  $sql = 'UPDATE user SET username="' . $username . '", email="' . $email . '" WHERE id=' . $user_id;
+  if (!$conn->query($sql)) {
+    echo $sql;
+    error(500, 'Update for user failed');
+  }
+  setcookie("email", $email, time()+3600);
+  setcookie("username", $username, time()+3600);
+  header("location: html/profile.php?user_id=" . $user_id);
 }
 
 

@@ -69,11 +69,11 @@
                         <span class="post-creator"> 
                             <div class="form-group">
                                 <label for="username">Username:</label>
-                                <input type="text" class="form-control" id="username" value="<?php echo $_COOKIE['username'] ?>">
+                                <input type="text" class="form-control" id="username" name="username" value="<?php echo $_COOKIE['username'] ?>">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="text" class="form-control" id="email" value="<?php echo $_COOKIE['email'] ?>">
+                                <input type="email" class="form-control" id="email" name="email" value="<?php echo $_COOKIE['email'] ?>">
                             </div>
                         </span>
                     </div>
@@ -81,9 +81,8 @@
             </div>
             <div class="bottom-div-actions">
                 <button type="submit" name="action" value="update_user" class="btn btn-primary">Update</button>
-                <input type="hidden" name="user_id" value="<?php $_COOKIE['user_id'] ?>"/>
+                <input type="hidden" name="user_id" value="<?php echo $_COOKIE['user_id'] ?>"/>
                 <a href="profile.php" class="btn btn-default pull-right">Back</a>
-
             </div>
             </form>
             </div>

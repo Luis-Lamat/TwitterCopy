@@ -33,7 +33,7 @@ if (!empty($_GET)) {
 
 function get_all_posts (){
   $conn = connect_to_db();
-  $sql = ' SELECT p.id, username, content, created_at FROM post AS p, user AS u 
+  $sql = ' SELECT u.id, username, content, created_at FROM post AS p, user AS u 
            WHERE p.user_id = u.id ORDER BY p.id DESC;';
   $rs = $conn->query($sql);
   if ($rs->num_rows == 0) {
